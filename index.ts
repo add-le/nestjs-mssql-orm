@@ -175,7 +175,7 @@ class _MssqlTable<T = unknown> implements OnApplicationShutdown {
       drop: async (): Promise<void> => {
         const request = this.request();
         const query =
-          "DECLARE @sql NVARCHAR(MAX); SET @sql = 'DROP TABLE ' + QUOTENAME(@name); EXEC sp_executesql @sql;";
+          "DECLARE @sql NVARCHAR(MAX); SET @sql = 'DROP TABLE IF EXISTS ' + QUOTENAME(@name); EXEC sp_executesql @sql;";
         request.input('name', NVarChar(128), this[innerTable].name);
         await request.query(query);
       },
